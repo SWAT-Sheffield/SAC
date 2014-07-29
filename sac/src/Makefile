@@ -18,13 +18,13 @@ F=.f90
 O=.o
 
 VACDIR=.
-GDFDIR=fgdfio/lib/
+GDFDIR=./fgdfio/lib
 
 ################# Definitions for source files #############################
 
 LIBS = vacdef$F sacgdf$F
 INCLUDES = vacdef$F vacpar$F vacusrpar$F sacgdf$F
-GDF_INCLUDES = $(GDFDIR)gdf_types.F90 $(GDFDIR)helpers_hdf5.F90 $(GDFDIR)grid_data_format.F90
+GDF_INCLUDES = $(GDFDIR)/gdf_types.F90 $(GDFDIR)/helpers_hdf5.F90 $(GDFDIR)/grid_data_format.F90 $(GDFDIR)/data_writers_beta.F90
 
 VAC_FOR = vac$F vacio$F vacgrid$F vacphys0$F vacphys$F vacusr$F
 VAC_OBJ = vac$O vacio$O vacgrid$O vacphys0$O vacphys$O vacusr$O
@@ -44,10 +44,10 @@ PREPROC= $(VACPP_)
 .SUFFIXES:
 .SUFFIXES: .t $F  $O
 
-$(VACFOR) vacini$F vacdef$F vacpar$F vacusrpar$F sacgdf$F     : $(PREPROC)
+$(VACFOR) vacini$F vacdef$F vacpar$F vacusrpar$F sacgdf$F       : $(PREPROC)
 roetest$F                           : $(PREPROC)
 
-$(VACOBJ) vacini$O vacall$O vaciniall$O vacsmall$O roetest$O    : $(INCLUDES)
+$(VACOBJ) vacini$O vacall$O vaciniall$O vacsmall$O roetest$O sacgdf$0   : $(INCLUDES)
 
 vacusrpar$F: vacusrpar.t
 	$(VACPP) $< $(PREFOR) > $@
@@ -61,6 +61,7 @@ vacdef$F: vacdef.t
 
 sacgdf$F: sacgdf.t
 	$(VACPP) $< $(PREFOR) > $@
+	$(FOR) -c sacgdf.f90
 
 # General precompilation rule
 .t$(F):
@@ -70,11 +71,6 @@ sacgdf$F: sacgdf.t
 $(F)$(O):
 	$(FOR) $(FORFLG) -c $<
 
-# Caps FORTRAN for GDF
-.F90$(0):
-	$(FOR) $(FORFLG) -c $<
-
-
 ########### Extra dependencies for some files with "INCLUDE:" statements
 vacphys$F: vacphys.t vacphys.mhd0.t vacphys.mhdres.t
 	$(VACPP) $< $(PREFOR) > $@
@@ -82,8 +78,11 @@ vacphys$F: vacphys.t vacphys.mhd0.t vacphys.mhdres.t
 vacgrid$F: vacgrid.t
 	$(VACPP) $< $(PREFOR) > $@
 
-vac :$(VACOBJ) $(LIBS_)
-	$(FOR) $(FORFLG) -o $(VACDIR)/vac $(GDF_INCLUDES) $(VACOBJ) $(LIBS)
+gdf :
+	$(FOR) $(FORFLG) -c $(GDF_INCLUDES)
+
+vac : gdf $(VACOBJ) $(LIBS_)
+	$(FOR) $(FORFLG) -o $(VACDIR)/vac $(VACOBJ) $(LIBS) $(GDF_INCLUDES)
 
 ###### Removing object files, precompiled Fortran files, and symbolic links
 
