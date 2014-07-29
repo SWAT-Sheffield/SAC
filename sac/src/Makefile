@@ -1,6 +1,6 @@
 # This is a VERY striped down makefile for compiling sac with gfortran
 # This will become a SAC only f2py makefile hopefully 
-F90=mpif90
+F90=h5pfc
 F90FLG=-std=f2008
 F90FLAGS= $(F90FLG)
 
@@ -18,11 +18,13 @@ F=.f90
 O=.o
 
 VACDIR=.
+GDFDIR=fgdfio/lib/
 
 ################# Definitions for source files #############################
 
-LIBS = vacdef$F
-INCLUDES = vacdef$F vacpar$F vacusrpar$F
+LIBS = vacdef$F sacgdf$F
+INCLUDES = vacdef$F vacpar$F vacusrpar$F sacgdf$F
+GDF_INCLUDES = $(GDFDIR)gdf_types.F90 $(GDFDIR)helpers_hdf5.F90 $(GDFDIR)grid_data_format.F90
 
 VAC_FOR = vac$F vacio$F vacgrid$F vacphys0$F vacphys$F vacusr$F
 VAC_OBJ = vac$O vacio$O vacgrid$O vacphys0$O vacphys$O vacusr$O
@@ -42,7 +44,7 @@ PREPROC= $(VACPP_)
 .SUFFIXES:
 .SUFFIXES: .t $F  $O
 
-$(VACFOR) vacini$F vacdef$F vacpar$F vacusrpar$F        : $(PREPROC)
+$(VACFOR) vacini$F vacdef$F vacpar$F vacusrpar$F sacgdf$F     : $(PREPROC)
 roetest$F                           : $(PREPROC)
 
 $(VACOBJ) vacini$O vacall$O vaciniall$O vacsmall$O roetest$O    : $(INCLUDES)
@@ -57,6 +59,8 @@ vacpar$F: vacpar.t
 vacdef$F: vacdef.t
 	$(VACPP) $< $(PREFOR) > $@
 
+sacgdf$F: sacgdf.t
+	$(VACPP) $< $(PREFOR) > $@
 
 # General precompilation rule
 .t$(F):
@@ -66,6 +70,9 @@ vacdef$F: vacdef.t
 $(F)$(O):
 	$(FOR) $(FORFLG) -c $<
 
+# Caps FORTRAN for GDF
+.F90$(0):
+	$(FOR) $(FORFLG) -c $<
 
 
 ########### Extra dependencies for some files with "INCLUDE:" statements
@@ -76,12 +83,12 @@ vacgrid$F: vacgrid.t
 	$(VACPP) $< $(PREFOR) > $@
 
 vac :$(VACOBJ) $(LIBS_)
-	$(FOR) $(FORFLG) -o $(VACDIR)/vac $(VACOBJ) $(LIBS)
+	$(FOR) $(FORFLG) -o $(VACDIR)/vac $(GDF_INCLUDES) $(VACOBJ) $(LIBS)
 
 ###### Removing object files, precompiled Fortran files, and symbolic links
 
 clean   :
-	rm -f vac*$F roetest$F Vvac*$F vac*.d *$O *~ *.mod
+	rm -f vac*$F sac*$F roetest$F Vvac*$F vac*.d *$O *~ *.mod
 
 cleanall: clean
 	rm -f vacphys.t vacphys0.t vacpar.t vacusrpar.t vacusr.t 
