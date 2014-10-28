@@ -1,7 +1,11 @@
 # This is a VERY striped down makefile for compiling sac with gfortran
 # This will become a SAC only f2py makefile hopefully 
-F90=h5pfc
-F90FLG=-std=f2008
+ifndef F90
+    F90=h5pfc
+endif
+ifndef F90FLG
+    F90FLG=-std=f2008
+endif
 F90FLAGS= $(F90FLG)
 
 FOR=$(F90)
