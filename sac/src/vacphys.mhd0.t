@@ -11,7 +11,7 @@ SUBROUTINE physini
 
   ! Tell VAC which variables are vectors, set default entropy coefficients
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: il
   !-----------------------------------------------------------------------------
@@ -41,13 +41,13 @@ SUBROUTINE process(count,idim^LIM,w)
   ! count=ifile+2 for saving results into the file indexed by ifile
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: count,idim^LIM
-  DOUBLE PRECISION:: w(ixG^T,nw)
+  REAL(kind=8):: w(ixG^T,nw)
 
   LOGICAL:: oktime
-  DOUBLE PRECISION:: cputime,time1,timeproc
+  REAL(kind=8):: cputime,time1,timeproc
   DATA timeproc /0.D0/
 
   ! The processing should eliminate divergence of B.
@@ -88,9 +88,9 @@ SUBROUTINE getdt(w,ix^L)
   ! If resistivity is  not zero, check diffusion time limit for dt
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
-  DOUBLE PRECISION:: w(ixG^T,nw)
+  REAL(kind=8):: w(ixG^T,nw)
   INTEGER:: ix^L
   !-----------------------------------------------------------------------------
 
@@ -112,10 +112,10 @@ SUBROUTINE getdivb(w,ixO^L,divb)
   ! Calculate div B within ixO
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER::          ixO^L,ix^L,idim
-  DOUBLE PRECISION:: w(ixG^T,nw),divb(ixG^T)
+  REAL(kind=8):: w(ixG^T,nw),divb(ixG^T)
   !-----------------------------------------------------------------------------
 
   oktest=INDEX(teststr,'getdivb')>=1
@@ -155,10 +155,10 @@ SUBROUTINE getflux(w,ix^L,iw,idim,f,transport)
   ! Set transport=.true. if a transport flux should be added
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER::          ix^L,iw,idim
-  DOUBLE PRECISION:: w(ixG^T,nw),f(ixG^T), fb(ixG^T)
+  REAL(kind=8):: w(ixG^T,nw),f(ixG^T), fb(ixG^T)
   LOGICAL::          transport
   !-----------------------------------------------------------------------------
 
@@ -236,10 +236,10 @@ SUBROUTINE addsource(qdt,ixI^L,ixO^L,iws,qtC,w,qt,wnew)
   ! Add sources from resistivity and Powell solver
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER::          ixI^L,ixO^L,iws(niw_)
-  DOUBLE PRECISION:: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
+  REAL(kind=8):: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
   !-----------------------------------------------------------------------------
 
   oktest=INDEX(teststr,'addsource')>=1
@@ -276,11 +276,11 @@ SUBROUTINE addsource_divb(qdt,ixI^L,ixO^L,iws,qtC,w,qt,wnew)
   ! otherwise shrink ixO
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER::          ixI^L,ixO^L,iws(niw_),iiw,iw
-  DOUBLE PRECISION:: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
-  DOUBLE PRECISION:: divb(ixG^T)
+  REAL(kind=8):: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
+  REAL(kind=8):: divb(ixG^T)
   !-----------------------------------------------------------------------------
 
   ! Calculating div B involves first derivatives

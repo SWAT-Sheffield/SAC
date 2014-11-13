@@ -11,21 +11,21 @@ PROGRAM vac
   ! Pulled upto FORTRAN 2008 by Stuart Mumford 2013
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ifile,ierrcode,iw
-  DOUBLE PRECISION:: w(ixG^T,nw),wnrm2,dtold,time0,time1
+  REAL(kind=8):: w(ixG^T,nw),wnrm2,dtold,time0,time1
 
   ! functions
   LOGICAL:: timetofinish,timetosave
-  DOUBLE PRECISION:: cputime
+  REAL(kind=8):: cputime
   !-----------------------------------------------------------------------------
   {CALL mpiinit ^IFMPI}
 
   verbose=.TRUE. .AND.ipe==0^IFMPI
   IF(verbose)THEN
      WRITE(*,'(a)')'VAC 4.52 configured to'
-     WRITE(*,'(a)')'  -d=22 -phi=0 -z=0 -g=104,104 -p=mhd -u=stuart'
+     WRITE(*,'(a)')'  -d=22 -phi=0 -z=0 -g=100,100 -p=mhd -u=default'
      WRITE(*,'(a)')'  -on=cd,rk,mpi'
      WRITE(*,'(a)')'  -off=mc,fct,tvdlf,tvd,impl,poisson,ct,gencoord,resist'
      {^IFMPI WRITE(*,'(a,i3,a)')'Running on ',npe,' processors'}
@@ -166,7 +166,7 @@ END PROGRAM vac
 SUBROUTINE startup
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ifile,iw,ivector,idim,qnvector
   !-----------------------------------------------------------------------------
@@ -235,10 +235,10 @@ SUBROUTINE advance(iws,w)
   ! Add split sources and fluxes with unsplit sources
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: iws(niw_)
-  DOUBLE PRECISION:: w(ixG^T,nw), w1(ixG^T,nw)
+  REAL(kind=8):: w(ixG^T,nw), w1(ixG^T,nw)
   !-----------------------------------------------------------------------------
 
   ! Add split sources berforehand if this is required
@@ -299,11 +299,11 @@ SUBROUTINE advance_expl(method,ix^L,iws,w1,w)
   ! w1 can be ised freely.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   CHARACTER(^LENTYPE) :: method
   INTEGER :: ix^L,iws(niw_)
-  DOUBLE PRECISION :: w(ixG^T,nw),w1(ixG^T,nw)
+  REAL(kind=8) :: w(ixG^T,nw),w1(ixG^T,nw)
 
   LOGICAL :: firstsweep,lastsweep
   !-----------------------------------------------------------------------------
@@ -377,16 +377,16 @@ SUBROUTINE advect(method,ix^L,iws,idim^LIM,w1,w,firstsweep,lastsweep)
   ! Depending on typeadvance and implpar call advect1 several times
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   CHARACTER(^LENTYPE):: method
   INTEGER:: ix^L,iws(niw_),idim^LIM
-  DOUBLE PRECISION:: w1(ixG^T,nw),w(ixG^T,nw)
+  REAL(kind=8):: w1(ixG^T,nw),w(ixG^T,nw)
 
   ! For most Runge-Kutta type schemes one more full array is needed
   ! For classical RK4 another array is needed
   {^ANDIFRK 
-  DOUBLE PRECISION:: w2(ixG^T,nw),w3(ixG^T,nw)
+  REAL(kind=8):: w2(ixG^T,nw),w3(ixG^T,nw)
   }
 
   !!!MEMORY Needed for typeadvance='adams2' only
@@ -502,11 +502,11 @@ SUBROUTINE advect1(method,qdt,ixI^L,iws,idim^LIM,qtC,wCT,qt,w,firstsweep,lastswe
   ! getboundaries
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   CHARACTER(^LENTYPE) :: method
   INTEGER:: ixI^L,ixO^L,iws(niw_),idim^LIM,idim
-  DOUBLE PRECISION:: qdt,qtC,qt,wCT(ixG^T,nw),w(ixG^T,nw)
+  REAL(kind=8):: qdt,qtC,qt,wCT(ixG^T,nw),w(ixG^T,nw)
 
   LOGICAL, INTENT(INOUT) :: firstsweep,lastsweep
   !-----------------------------------------------------------------------------
@@ -562,10 +562,10 @@ SUBROUTINE addsource2(qdt,ixII^L,ixOO^L,iws,qtC,wCT,qt,w)
   ! Add source within ixOO for iws: w=w+qdt*S[wCT]
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ixI^L,ixO^L,ixII^L,ixOO^L,iws(niw_)
-  DOUBLE PRECISION:: qdt,qtC,qt,wCT(ixG^T,nw),w(ixG^T,nw)
+  REAL(kind=8):: qdt,qtC,qt,wCT(ixG^T,nw),w(ixG^T,nw)
   !-----------------------------------------------------------------------------
 
   oktest=INDEX(teststr,'addsource')>=1
@@ -597,9 +597,9 @@ LOGICAL FUNCTION timetofinish(time0)
   ! or residual is small enough. Other conditions may be included.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
-  DOUBLE PRECISION:: time0, cputime
+  REAL(kind=8):: time0, cputime
   LOGICAL:: okfinish
   !-----------------------------------------------------------------------------
 
@@ -622,7 +622,7 @@ LOGICAL FUNCTION timetosave(ifile)
   ! Other conditions may be included.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ifile
   LOGICAL:: oksave
@@ -661,9 +661,9 @@ SUBROUTINE getdt_courant(w,ix^L)
   ! rotations while the value calculated here does not use a rotation.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
-  DOUBLE PRECISION:: w(ixG^T,nw),cmax(ixG^T),courantmax,dtold
+  REAL(kind=8):: w(ixG^T,nw),cmax(ixG^T),courantmax,dtold
   INTEGER:: ix^L,idim
   LOGICAL:: new_cmax
   !-----------------------------------------------------------------------------
@@ -711,7 +711,7 @@ SUBROUTINE getdt_courant(w,ix^L)
 END SUBROUTINE getdt_courant
 
 !=============================================================================
-DOUBLE PRECISION FUNCTION cputime()
+REAL(kind=8) FUNCTION cputime()
 
   ! Return cputime in seconds as a double precision number.
   ! For g77 compiler replace F77_ with F77_ everywhere in this function

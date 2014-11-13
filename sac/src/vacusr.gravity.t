@@ -27,10 +27,10 @@ SUBROUTINE addsource_grav(qdt,ixI^L,ixO^L,iws,qtC,w,qt,wnew)
   ! in iws. w is at time qtC, wnew is advanced from qt to qt+qdt.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER::          ixI^L,ixO^L,iws(niw_)
-  DOUBLE PRECISION:: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
+  REAL(kind=8):: qdt,qtC,qt,w(ixG^T,nw),wnew(ixG^T,nw)
   INTEGER:: iiw,iw,idim
 !!! ! For a spatially varying gravity define the common grav array
 !!! double precision:: grav(ixG^T,ndim)
@@ -98,11 +98,11 @@ END SUBROUTINE addsource_grav
 SUBROUTINE getdt_grav(w,ix^L)
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
-  DOUBLE PRECISION :: w(ixG^T,nw)
+  REAL(kind=8) :: w(ixG^T,nw)
   INTEGER :: ix^L,idim
-  DOUBLE PRECISION, SAVE :: dtgrav
+  REAL(kind=8), SAVE :: dtgrav
  
 !!! ! For spatially varying gravity you need a common grav array
 !!! double precision:: grav(ixG^T,ndim)

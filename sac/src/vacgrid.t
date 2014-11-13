@@ -19,7 +19,7 @@ SUBROUTINE boundsetup
   !    typeB(iw,iB)                                - boundary type string
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ix^L,iB,jB,iw,idim,idm,ixG^LIM(ndim),ixM^LIM(ndim)
   !-----------------------------------------------------------------------------
@@ -168,10 +168,10 @@ SUBROUTINE ensurebound(dix,ixI^L,ixO^L,qt,w)
   ! Adjust ixI and ixO. Call getboundary if needed.
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: dix,ixI^L,ixO^L
-  DOUBLE PRECISION:: qt,w(ixG^T,nw)
+  REAL(kind=8):: qt,w(ixG^T,nw)
   !-----------------------------------------------------------------------------
 
   oktest=INDEX(teststr,'ensurebound')>0
@@ -197,13 +197,13 @@ END SUBROUTINE ensurebound
 SUBROUTINE getboundary(qt,iw^LIM,idim^LIM,w)
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: iw^LIM,idim^LIM
-  DOUBLE PRECISION:: qt,w(ixG^T,1:nw)
+  REAL(kind=8):: qt,w(ixG^T,1:nw)
   INTEGER:: ix,ix^D,ixe,ixf,ix^L,ixpair^L,idim,iw,iB
   INTEGER:: iwv,jdim
-  DOUBLE PRECISION:: coeffnormal,coefftransv
+  REAL(kind=8):: coeffnormal,coefftransv
   LOGICAL:: initialized
 
 
@@ -522,10 +522,10 @@ SUBROUTINE setnoflux(iw,idim,ix^L,fRC,ixR^L,fLC,ixL^L)
   ! in a boundary region
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: iw,idim,ix^L,ixL^L,ixR^L
-  DOUBLE PRECISION:: fRC(ixG^T), fLC(ixG^T)
+  REAL(kind=8):: fRC(ixG^T), fLC(ixG^T)
   INTEGER:: iB,ixe,ixB^L
 
   !-----------------------------------------------------------------------------
@@ -569,12 +569,12 @@ SUBROUTINE gridsetup1
   ! qx           - x with an extended index range for calculation of dx
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ix^L,hx^L,jx^L
   INTEGER:: ix,ixe,ixf,idim,jdim
-  DOUBLE PRECISION:: qx(IXG^LL^LADD1:,ndim)
-  DOUBLE PRECISION:: r(IXGLO1-1:IXGHI1+1),rC(IXGLO1-1:IXGHI1+1)
+  REAL(kind=8):: qx(IXG^LL^LADD1:,ndim)
+  REAL(kind=8):: r(IXGLO1-1:IXGHI1+1),rC(IXGLO1-1:IXGHI1+1)
 
   !-----------------------------------------------------------------------------
 
@@ -671,11 +671,11 @@ END SUBROUTINE gridsetup1
 SUBROUTINE gradient4(realgrad,q,ix^L,idim,gradq)
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   LOGICAL:: realgrad
   INTEGER:: ix^L,idim
-  DOUBLE PRECISION:: q(ixG^T),gradq(ixG^T)
+  REAL(kind=8):: q(ixG^T),gradq(ixG^T)
   INTEGER:: kx^L,jx^L,hx^L,gx^L
   INTEGER:: minx1^D,maxx1^D,k
   !-----------------------------------------------------------------------------
@@ -731,10 +731,10 @@ SUBROUTINE laplace4(q,ix^L,laplaceq)
 !!! We assume uniform Cartesian grid in slab symmetry for now
 
   USE constants
-  USE common_varibles
+  USE common_variables
 
   INTEGER:: ix^L
-  DOUBLE PRECISION:: q(ixG^T),laplaceq(ixG^T)
+  REAL(kind=8):: q(ixG^T),laplaceq(ixG^T)
 
   INTEGER:: idim,kx^L,jx^L,hx^L,gx^L
   !-----------------------------------------------------------------------------
