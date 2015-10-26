@@ -23,7 +23,7 @@ module code_constants
   integer, parameter :: ixGlo^D=1
 
   ! The next line is edited by SETVAC
-  integer, parameter :: ixGhi1=104,ixGhi2=104,ixGhimin=104,ixGhimax=104
+  integer, parameter :: ixGhi1=128,ixGhi2=128,ixGhimin=128,ixGhimax=128
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   integer, parameter :: ndim=^ND, ndir=^NC

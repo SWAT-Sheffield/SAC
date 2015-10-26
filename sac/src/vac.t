@@ -25,9 +25,9 @@ program vac
   verbose=.true. .and.ipe==0^IFMPI
   if(verbose)then
      write(*,'(a)')'VAC 4.52 configured to'
-     write(*,'(a)')'  -d=22 -phi=0 -z=0 -g=104,104 -p=mhd -u=stuart'
-     write(*,'(a)')'  -on=cd,rk'
-     write(*,'(a)')'  -off=mc,fct,tvdlf,tvd,impl,poisson,ct,gencoord,resist,mpi'
+     write(*,'(a)')'  -d=22 -phi=0 -z=0 -g=128,128 -p=mhd -u=OT'
+     write(*,'(a)')'  -on=cd,rk,mpi'
+     write(*,'(a)')'  -off=mc,fct,tvdlf,tvd,impl,poisson,ct,gencoord,resist'
      {^IFMPI write(*,'(a,i3,a)')'Running on ',npe,' processors'}
   endif
 
