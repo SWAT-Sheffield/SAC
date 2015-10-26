@@ -3,7 +3,7 @@
 ! Subroutines for boundaries, grid, divergence of flux, gradients
 ! Also the limiter functions for TVD, TVDLF, TVDMU schemes
 
-{include:vacgrid.gencoord.t ^IFGEN}
+{INCLUDE:vacgrid.gencoord.t ^IFGEN}
 !INCLUDE:vacgrid.setnozzle.t
 !=============================================================================
 subroutine boundsetup

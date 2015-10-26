@@ -1,10 +1,10 @@
 !##############################################################################
 ! module vacphys.mhd0 - common subroutines for mhd and mhdiso
 
-include:vacphys.mhdroe.t^IFTVD
-include:vacproc.projectb.t^NOONED^IFPOISSON
-include:vacproc.constrainb.t^NOONED^IFCT
-include:vacphys.mhdres.t^IFRES
+INCLUDE:vacphys.mhdroe.t^IFTVD
+INCLUDE:vacproc.projectb.t^NOONED^IFPOISSON
+INCLUDE:vacproc.constrainb.t^NOONED^IFCT
+INCLUDE:vacphys.mhdres.t^IFRES
 !=============================================================================
 
 subroutine physini

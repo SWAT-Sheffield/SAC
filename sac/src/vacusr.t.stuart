@@ -2,8 +2,8 @@
 ! module vacusr - nul
 !##############################################################################
 
-include:vacusr.gravity.t
-include:vacusr.viscosity.t
+INCLUDE:vacusr.gravity.t
+INCLUDE:vacusr.viscosity.t
 
 
 !=============================================================================
