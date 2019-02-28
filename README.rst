@@ -21,9 +21,10 @@ The fabricate method is designed to allow the automatic configuration of the
 build parameters from other Python code. See https://github.com/SWAT-Sheffield/Flux-Surfaces.
 
 See also the following repositories
-1. The VAC Code: https://github.com/SWAT-Sheffield/vac
-2. The GPU Version of SAC: https://github.com/SWAT-Sheffield/smaug-all
-3. The development area for SAC: https://github.com/SWAT-Sheffield/SAC_svn
+
+* The VAC Code: https://github.com/SWAT-Sheffield/vac
+* The GPU Version of SAC: https://github.com/SWAT-Sheffield/smaug-all
+* The development area for SAC: https://github.com/SWAT-Sheffield/SAC_svn
 
 Notes on these and in particular Sheffield Magnetohydrodynamics Accelerated Using GPUs (SMAUG)
 http://solarwavetheory.blogspot.com/search/label/SMAUG
